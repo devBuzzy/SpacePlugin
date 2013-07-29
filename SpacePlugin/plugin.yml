@@ -5,7 +5,7 @@ version: 0.001
 commands:
   generate:
     description: Generates a world. Valid gen ids are 0 (empty), 1 (hills), 2 (overhangs), and 3 (floating islands).
-    usage: /genempty (world gen id) (name)
+    usage: /generate(world gen id) (name)
   
   tpd:
     description: Changes your world
@@ -21,3 +21,7 @@ commands:
   bbf:
     description: Block beneath feet. That's all.
     usage: /bbf
+    
+  crew:
+    description: Base command for crew commands. /crew for more information.
+    usage: /crew

@@ -12,7 +12,7 @@ public final class SpacePlugin extends JavaPlugin{
 	
 	public static HashMap<String, String> worldChunkGens = new HashMap<String, String>();
 	
-	//HashMap that holds player data and stuff. Current prefs format is: {Crew Captain}
+	//HashMap that holds player data and stuff. Current prefs format is: {Crew Captain, Crew Captain of most recent invite}
 	public static HashMap<String, String[]> playerData = new HashMap<String, String[]>();
 	
 	@Override
@@ -28,7 +28,8 @@ public final class SpacePlugin extends JavaPlugin{
 		if(getConfig().getConfigurationSection("playerData") != null){
 			Map<String, Object> playerDataMap = getConfig().getConfigurationSection("playerData").getValues(false);
 			for(Entry<String, Object> entry : playerDataMap.entrySet()){
-				playerDataMap.put((String) entry.getKey(), (String[]) entry.getValue());
+				String[] values = (String[]) entry.getValue();
+				playerDataMap.put((String) entry.getKey(), values);
 				}
 			}
 		
@@ -37,6 +38,9 @@ public final class SpacePlugin extends JavaPlugin{
 		getCommand("unload").setExecutor(new CommandUnloadWorld());
 		getCommand("bbf").setExecutor(new CommandPlaceBlock());
 		getCommand("load").setExecutor(new CommandLoadWorld());
+		getCommand("crew").setExecutor(new CommandCrew());
+		
+		getServer().getPluginManager().registerEvents(new SpacePluginLoginListener(), this);
 	}
 	
 	@Override
