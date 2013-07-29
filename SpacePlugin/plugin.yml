@@ -1,0 +1,23 @@
+name: SpacePlugin
+main: io.github.LilParker.SpacePlugin.SpacePlugin
+version: 0.001
+
+commands:
+  generate:
+    description: Generates a world. Valid gen ids are 0 (empty), 1 (hills), 2 (overhangs), and 3 (floating islands).
+    usage: /genempty (world gen id) (name)
+  
+  tpd:
+    description: Changes your world
+    usage: /tpd (world name)
+  
+  unload:
+    description: Unloads a world
+    usage: /unload (world name)
+    
+  load:
+    description: Loads a world
+    
+  bbf:
+    description: Block beneath feet. That's all.
+    usage: /bbf
