@@ -25,3 +25,7 @@ commands:
   crew:
     description: Base command for crew commands. /crew for more information.
     usage: /crew
+    
+  viewdata:
+    description: Debug command for viewing a player's playerData.
+    usage: /viewdata (player)

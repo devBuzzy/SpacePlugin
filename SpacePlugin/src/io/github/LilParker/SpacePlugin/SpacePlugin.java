@@ -39,6 +39,7 @@ public final class SpacePlugin extends JavaPlugin{
 		getCommand("bbf").setExecutor(new CommandPlaceBlock());
 		getCommand("load").setExecutor(new CommandLoadWorld());
 		getCommand("crew").setExecutor(new CommandCrew());
+		getCommand("viewdata").setExecutor(new CommandViewData());
 		
 		getServer().getPluginManager().registerEvents(new SpacePluginLoginListener(), this);
 	}

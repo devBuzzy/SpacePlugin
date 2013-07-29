@@ -11,7 +11,8 @@ public class SpacePluginLoginListener implements Listener {
 	public void onPlayerLogin(PlayerJoinEvent e){
 		Player player = e.getPlayer();
 		player.sendMessage("Tunnel snakes rule!");
-		if(SpacePlugin.playerData.get(player.getName()) == null){
+		if(SpacePlugin.playerData.containsKey(player.getName()) != true){
+			player.sendMessage("Have some data!");
 			String[] defaultData = new String[2];
 			defaultData[0] = player.getName();
 			SpacePlugin.playerData.put(player.getName(), defaultData);
