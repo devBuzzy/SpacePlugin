@@ -1,11 +1,13 @@
 package io.github.LilParker.SpacePlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import io.github.LilParker.SpacePlugin.Commands.*;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SpacePlugin extends JavaPlugin{
@@ -26,10 +28,20 @@ public final class SpacePlugin extends JavaPlugin{
 		}
 		
 		if(getConfig().getConfigurationSection("playerData") != null){
-			Map<String, Object> playerDataMap = getConfig().getConfigurationSection("playerData").getValues(false);
-			for(Entry<String, Object> entry : playerDataMap.entrySet()){
-				String[] values = (String[]) entry.getValue();
-				playerDataMap.put((String) entry.getKey(), values);
+			ConfigurationSection playerDataSection = getConfig().getConfigurationSection("playerData");
+			for(String username : playerDataSection.getKeys(false)){
+				ArrayList<String> tempVals = new ArrayList<String>();
+				for(Object valObj : getConfig().getList("playerData." + username)){
+					if(valObj != null){
+						String val = valObj.toString();
+						tempVals.add(val);
+						}else{
+							tempVals.add(null);
+						}
+					}
+				String[] values = new String[tempVals.size()];
+				tempVals.toArray(values);
+				playerData.put(username, values);
 				}
 			}
 		
@@ -42,6 +54,7 @@ public final class SpacePlugin extends JavaPlugin{
 		getCommand("viewdata").setExecutor(new CommandViewData());
 		
 		getServer().getPluginManager().registerEvents(new SpacePluginLoginListener(), this);
+		getServer().getPluginManager().registerEvents(new SpacePluginSignListener(), this);
 	}
 	
 	@Override
@@ -49,5 +62,7 @@ public final class SpacePlugin extends JavaPlugin{
 		getConfig().createSection("worldChunkGens", worldChunkGens);
 		getConfig().createSection("playerData", playerData);
 		saveConfig();
+		worldChunkGens = null;
+		playerData = null;
 	}
 }

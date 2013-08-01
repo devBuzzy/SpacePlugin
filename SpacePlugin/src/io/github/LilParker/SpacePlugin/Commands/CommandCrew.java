@@ -53,10 +53,28 @@ public class CommandCrew extends SpacePluginCommand implements CommandExecutor{
 								newValue[1] = sender.getName();
 								SpacePlugin.playerData.put(player.getName(), newValue);
 							}else{
-								sender.sendMessage("No player by that message");
+								sender.sendMessage("No player by that name");
 							}
 						}else{
 							sender.sendMessage("Must be Captain to invite to crew");
+						}
+					}else{
+						if(args[1].equalsIgnoreCase("accept")){
+							String[] values = SpacePlugin.playerData.get(sender.getName());
+							values[0] = values[1];
+							sender.sendMessage("Joined " + values[0] + "'s crew");
+							if(Bukkit.getPlayer(values[0]) != null){
+								Bukkit.getPlayer(values[0]).sendMessage(sender.getName() + " has joined your crew.");
+							}
+							SpacePlugin.playerData.put(sender.getName(), values);
+						}else{
+							String[] values = SpacePlugin.playerData.get(sender.getName());
+							sender.sendMessage("You have denied " + values[1] + "'s crew invite.");
+							if(Bukkit.getPlayer(values[1]) != null){
+								Bukkit.getPlayer(values[1]).sendMessage(sender.getName() + " has denied your crew invite.");
+							}
+							values[1] = null;
+							SpacePlugin.playerData.put(sender.getName(), values);
 						}
 					}
 				}else{
