@@ -1,6 +1,7 @@
 name: SpacePlugin
 main: io.github.LilParker.SpacePlugin.SpacePlugin
 version: 0.001
+depend: [Vault]
 
 commands:
   generate:

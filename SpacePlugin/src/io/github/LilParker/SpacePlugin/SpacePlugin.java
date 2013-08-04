@@ -7,7 +7,10 @@ import java.util.Map.Entry;
 
 import io.github.LilParker.SpacePlugin.Commands.*;
 
+import net.milkbowl.vault.economy.Economy;
+
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SpacePlugin extends JavaPlugin{
@@ -16,6 +19,8 @@ public final class SpacePlugin extends JavaPlugin{
 	
 	//HashMap that holds player data and stuff. Current prefs format is: {Crew Captain, Crew Captain of most recent invite}
 	public static HashMap<String, String[]> playerData = new HashMap<String, String[]>();
+	
+	public static Economy economy = null;
 	
 	@Override
 	public void onEnable(){
@@ -55,6 +60,8 @@ public final class SpacePlugin extends JavaPlugin{
 		
 		getServer().getPluginManager().registerEvents(new SpacePluginLoginListener(), this);
 		getServer().getPluginManager().registerEvents(new SpacePluginSignListener(), this);
+		
+		setupEconomy();
 	}
 	
 	@Override
@@ -65,4 +72,14 @@ public final class SpacePlugin extends JavaPlugin{
 		worldChunkGens = null;
 		playerData = null;
 	}
+	
+	private boolean setupEconomy()
+    {
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if (economyProvider != null) {
+            economy = economyProvider.getProvider();
+        }
+
+        return (economy != null);
+    }
 }
